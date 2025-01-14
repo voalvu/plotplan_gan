@@ -1,0 +1,93 @@
+<html>
+    <head>
+
+    <style>
+        .canvas-container {
+            display: flex; /* Use flexbox to align canvases side by side */
+            justify-content:left; /* Space them evenly */
+            margin-top: 20px; /* Add some space above the canvases */
+        }
+        .canvas-wrapper {
+            text-align: center; /* Center the title above the canvas */
+            margin: 0 10px; /* Add some margin between the canvases */
+        }
+        canvas {
+            border: 1px solid black; /* Add a border to the canvases */
+            margin: 0 10px; /* Add some margin between the canvases */
+        }
+        
+        h2 {
+            text-align: center; /* Center the title */
+            color: darkblue; /* Change the title color */
+            font-family: Arial, sans-serif; /* Change the font */
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.4.0/gl-matrix.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script async src="https://unpkg.com/es-module-shims@1.8.2/dist/es-module-shims.js"></script>
+    <script src="https://unpkg.com/camera-controls/dist/camera-controls.min.js"></script>
+    
+
+</head>
+
+<body><h1>Site-plan floor generator</h1><div id="settings"></div>
+<canvas id="canvas" width="1920" height="1080"></canvas>
+
+<script src="html_script.js">
+
+</script>
+<div class="canvas-container">
+<img id="loadingGif" src="loading.gif" style="display: none; max-width: 0.2vw; max-height: 0.2vh;" alt="Loading...">
+<div class="canvas-wrapper">
+<h2>Input canvas - Draw on it !</h2>
+<canvas id="canvas2" width="400" height="400" style="outline-width: 15px;
+outline-color: black;
+outline-style: groove;"></canvas>
+</div>
+<div class="canvas-wrapper">
+<h2>Output canvas - Click the Building !</h2>
+<canvas id="canvas3" width="500" height="500" style="outline-width: 15px;
+outline-color: darkgoldenrod;
+outline-style: groove;">> </canvas>
+</div>
+<div class="canvas-wrapper">
+    <div id="container"></div>
+    <h2>3D output Canvas</h2>
+    <canvas id="canvas4" width="500" height="500" style="outline-width: 15px;
+    outline-color: darkgoldenrod;
+    outline-style: groove;">> </canvas>
+    </div>
+</div>
+<div class="info">
+	<a href="https://github.com/yomotsu/camera-controls">GitHub repo</a><br>
+	<button onclick="rotateTo( 'front' ), cameraControls.reset( true )">reset</button><br>
+	<button onclick="rotateTo( 'front' ), cameraControls.fitToBox( mesh, true )">fit front side of the mesh</button><br>
+    <br><br>
+    <button onclick="rotateTo( 'front' ), cameraControls.fitToBox( mesh, true )">my op</button><br>
+
+	<button onclick="rotateTo( 'front' ), cameraControls.fitToBox( mesh, true, { cover: true } )">fill (cover) front side of the mesh</button><br>
+	<button onclick="rotateTo( 'back' ), cameraControls.fitToBox( mesh, true, { paddingLeft: 0, paddingRight: 0, paddingBottom: 1, paddingTop: 2 } )">fit back side with padding(top: 2unit, bottom: 1unit )</button>
+	<button onclick="rotateTo( 'up' ), cameraControls.fitToBox( mesh, true, { paddingLeft: 0, paddingRight: 0, paddingBottom: 0.5, paddingTop: 2 } )">fit up side with padding(top: 2unit, bottom: 0.5unit )</button>
+	<button onclick="rotateTo( 'down' ), cameraControls.fitToBox( mesh, true, { paddingLeft: 4, paddingRight: 4, paddingBottom: 4, paddingTop: 4 } )">fit down side with padding(top: 4unit, bottom: 4unit, left: 4unit, right: 4unit )</button>
+	<button onclick="rotateTo( 'right' ), cameraControls.fitToBox( mesh, true, { paddingLeft: 1, paddingRight: 0 } )">fit right side with padding(left: 1unit, right: 0unit )</button>
+	<button onclick="rotateTo( 'left' ), paddingInCssPixel( 100, 100, 200, 100 )">fit left side with padding in pixel( top: 100<b>px</b>, right: 100<b>px</b>, bottom: 200<b>px</b>, right: 100<b>px</b> )</button>
+</div>
+<input type="file" id="imageLoader" accept="image/*">
+<button id="sendCoordinates">Send Coordinates to Server</button>
+<script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.161.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.161.0/examples/jsm/"
+        }
+    }
+    </script>
+
+
+<script src="html_canvas.js"></script>
+
+<script type="module" src="camera_controls.js">
+
+</script>
+<img src="temp" id="resultImage"></img>
+</body></html>
